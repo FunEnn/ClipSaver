@@ -6,10 +6,10 @@ plugins {
 
 android {
     namespace = "com.example.clipsaver.data.clipboard"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 26
     }
 
     compileOptions {
