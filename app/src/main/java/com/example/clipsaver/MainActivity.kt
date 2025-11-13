@@ -67,7 +67,6 @@ class MainActivity : ComponentActivity() {
 
     private fun startClipboardMonitorSafely() {
         if (!NotificationManagerCompat.from(this).areNotificationsEnabled()) {
-            // 用户关闭通知时无法启动前台服务
             return
         }
         ClipboardMonitorService.start(this)
@@ -75,24 +74,20 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun ensureAccessibilityEnabled() {
-        // 检查无障碍服务是否已启用
         val isEnabled = AccessibilityUtils.isServiceEnabled(
             this,
             "com.example.clipsaver.accessibility.GlobalClipboardService"
         )
         
         if (!isEnabled) {
-            // 只有在未启用时才引导用户开启
             Log.d("MainActivity", "无障碍服务未启用，引导用户开启")
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
             startActivity(intent)
         } else {
-            // 服务已启用，尝试重新启动服务以确保正常运行
             Log.d("MainActivity", "无障碍服务已启用，确保服务正常运行")
             try {
-                // 尝试启动无障碍服务
                 val serviceIntent = Intent(this, GlobalClipboardService::class.java)
                 startService(serviceIntent)
             } catch (e: Exception) {
@@ -103,12 +98,9 @@ class MainActivity : ComponentActivity() {
     
     override fun onResume() {
         super.onResume()
-        // 只在应用启动时检查一次无障碍服务，避免频繁跳转
-        // 用户可以在应用内手动刷新状态
     }
     
     private fun checkServiceStatus() {
-        // 检查通知权限是否开启
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val hasNotificationPermission = ContextCompat.checkSelfPermission(
                 this,
@@ -116,15 +108,12 @@ class MainActivity : ComponentActivity() {
             ) == PackageManager.PERMISSION_GRANTED
             
             if (!hasNotificationPermission) {
-                // 如果没有通知权限，重新请求
                 requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
                 return
             }
         }
         
-        // 检查通知是否启用
         if (!NotificationManagerCompat.from(this).areNotificationsEnabled()) {
-            // 引导用户开启通知
             val intent = Intent().apply {
                 when {
                     Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
@@ -142,7 +131,6 @@ class MainActivity : ComponentActivity() {
             return
         }
         
-        // 尝试启动剪贴板监听服务
         try {
             ClipboardMonitorService.start(this)
         } catch (e: Exception) {
@@ -152,6 +140,5 @@ class MainActivity : ComponentActivity() {
     
     override fun onDestroy() {
         super.onDestroy()
-        // 清理资源
     }
 }

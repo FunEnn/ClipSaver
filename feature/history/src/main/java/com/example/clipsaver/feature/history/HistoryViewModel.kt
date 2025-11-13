@@ -33,7 +33,9 @@ class HistoryViewModel(
         currentJob?.cancel()
         currentJob = viewModelScope.launch {
             repository.getAllEntries().collect { entries ->
-                _entries.value = entries
+                val sortedEntries = entries.sortedWith(compareByDescending<ClipEntry> { it.isFavorite }
+                    .thenByDescending { it.date })
+                _entries.value = sortedEntries
                 _totalCount.value = entries.size
             }
         }
@@ -45,13 +47,16 @@ class HistoryViewModel(
         currentJob = viewModelScope.launch {
             if (query.isBlank()) {
                 repository.getAllEntries().collect { entries ->
-                    _entries.value = entries
-                    _totalCount.value = entries.size
+                val sortedEntries = entries.sortedWith(compareByDescending<ClipEntry> { it.isFavorite }
+                    .thenByDescending { it.date })
+                _entries.value = sortedEntries
+                _totalCount.value = entries.size
                 }
             } else {
                 repository.searchEntries(query).collect { entries ->
-                    _entries.value = entries
-                    // 搜索时总条数保持不变，只显示搜索结果数量
+                    val sortedEntries = entries.sortedWith(compareByDescending<ClipEntry> { it.isFavorite }
+                        .thenByDescending { it.date })
+                    _entries.value = sortedEntries
                 }
             }
         }

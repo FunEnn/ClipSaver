@@ -48,12 +48,9 @@ class ClipboardMonitorService : Service() {
     private suspend fun getClipboardTextSafely(): String? {
         return withContext(Dispatchers.Main) {
             try {
-                // Android 10+ 后台剪贴板访问限制处理
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    // Android 10+ 需要特殊处理，尝试使用无障碍服务或主线程
                     tryGetClipboardTextWithWorkaround()
                 } else {
-                    // Android 9及以下版本可以直接访问
                     getClipboardTextDirectly()
                 }
             } catch (e: Exception) {
@@ -65,7 +62,6 @@ class ClipboardMonitorService : Service() {
     
     private fun tryGetClipboardTextWithWorkaround(): String? {
         return try {
-            // 尝试多种获取剪贴板内容的方法
             val methods = listOf(
                 { getClipboardTextDirectly() },
                 { getClipboardTextViaAccessibility() },
@@ -91,10 +87,7 @@ class ClipboardMonitorService : Service() {
     }
     
     private fun getClipboardTextViaAccessibility(): String? {
-        // 尝试通过无障碍服务机制获取剪贴板内容
         return try {
-            // 这里可以调用无障碍服务相关的方法
-            // 暂时返回null，待实现
             null
         } catch (e: Exception) {
             Log.d(TAG, "通过无障碍服务获取剪贴板失败: ${e.message}")
@@ -103,10 +96,7 @@ class ClipboardMonitorService : Service() {
     }
     
     private fun getClipboardTextWithSystemInteraction(): String? {
-        // 尝试通过系统交互的方式获取剪贴板内容
         return try {
-            // 这里可以尝试模拟用户交互或其他系统调用
-            // 暂时返回null，待实现
             null
         } catch (e: Exception) {
             Log.d(TAG, "通过系统交互获取剪贴板失败: ${e.message}")
@@ -166,10 +156,8 @@ class ClipboardMonitorService : Service() {
         
         Log.i(TAG, "剪贴板监听服务已启动")
         
-        // 记录当前剪贴板内容作为初始状态
         serviceScope.launch {
             try {
-                // 安全地获取初始剪贴板内容
                 val initialText = getClipboardTextSafely()
                 if (!initialText.isNullOrBlank()) {
                     lastClipboardText = initialText

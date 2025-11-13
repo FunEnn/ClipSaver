@@ -26,7 +26,6 @@ class GlobalClipboardService : AccessibilityService() {
     override fun onServiceConnected() {
         super.onServiceConnected()
         
-        // 配置无障碍服务信息
         val serviceInfo = AccessibilityServiceInfo().apply {
             eventTypes = AccessibilityEvent.TYPE_VIEW_CLICKED or
                         AccessibilityEvent.TYPE_VIEW_FOCUSED or
@@ -41,15 +40,12 @@ class GlobalClipboardService : AccessibilityService() {
         }
         this.serviceInfo = serviceInfo
         
-        // 初始化剪贴板管理器
         clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         
-        // 添加剪贴板监听器
         clipboardManager?.addPrimaryClipChangedListener(clipboardListener)
         
         Log.i(TAG, "全局剪贴板无障碍服务已启动")
         
-        // 记录初始状态
         serviceScope.launch {
             val initialText = getClipboardTextSafely()
             if (!initialText.isNullOrBlank()) {
