@@ -20,6 +20,9 @@ class HistoryViewModel(
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
     
+    private val _totalCount = MutableStateFlow(0)
+    val totalCount: StateFlow<Int> = _totalCount.asStateFlow()
+    
     private var currentJob: Job? = null
     
     init {
@@ -31,6 +34,7 @@ class HistoryViewModel(
         currentJob = viewModelScope.launch {
             repository.getAllEntries().collect { entries ->
                 _entries.value = entries
+                _totalCount.value = entries.size
             }
         }
     }
@@ -42,10 +46,12 @@ class HistoryViewModel(
             if (query.isBlank()) {
                 repository.getAllEntries().collect { entries ->
                     _entries.value = entries
+                    _totalCount.value = entries.size
                 }
             } else {
                 repository.searchEntries(query).collect { entries ->
                     _entries.value = entries
+                    // 搜索时总条数保持不变，只显示搜索结果数量
                 }
             }
         }

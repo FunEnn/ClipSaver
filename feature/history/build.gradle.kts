@@ -29,6 +29,7 @@ android {
 
 dependencies {
     implementation(project(":core:model"))
+    implementation(project(":core:utils"))
     implementation(project(":data:clipboard"))
     
     // Compose

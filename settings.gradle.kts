@@ -22,6 +22,7 @@ dependencyResolutionManagement {
 rootProject.name = "ClipSaver"
 include(":app")
 include(":core:model")
+include(":core:utils")
 include(":data:clipboard")
 include(":feature:history")
  

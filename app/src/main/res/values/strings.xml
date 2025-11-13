@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ClipSaver</string>
+    <string name="accessibility_service_description">监听剪贴板变化以保存复制内容到历史记录</string>
+    <string name="accessibility_service_summary">开启后可在全局复制时自动记录</string>
+    <string name="global_clipboard_service_description">全局剪贴板监听服务</string>
+    <string name="content_detail_title">剪贴板内容详情</string>
+    <string name="view_full_content">查看完整</string>
+    <string name="close_dialog">关闭</string>
 </resources>
