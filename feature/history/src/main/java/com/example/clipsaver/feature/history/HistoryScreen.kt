@@ -32,11 +32,14 @@ fun HistoryScreen(
 ) {
     val context = LocalContext.current
     var isAccEnabled by remember {
-        mutableStateOf(
-            AccessibilityUtils.isServiceEnabled(
-                context,
-                "com.example.clipsaver.accessibility.GlobalClipboardService"
-            )
+        mutableStateOf(false) // 初始值设为false，稍后更新
+    }
+    
+    // 使用LaunchedEffect在每次屏幕显示时检查无障碍服务状态
+    LaunchedEffect(Unit) {
+        isAccEnabled = AccessibilityUtils.isServiceEnabled(
+            context,
+            "com.example.clipsaver.accessibility.GlobalClipboardService"
         )
     }
 
