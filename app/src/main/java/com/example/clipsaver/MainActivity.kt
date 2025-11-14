@@ -80,11 +80,8 @@ class MainActivity : ComponentActivity() {
         )
         
         if (!isEnabled) {
-            Log.d("MainActivity", "无障碍服务未启用，引导用户开启")
-            val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            }
-            startActivity(intent)
+            Log.d("MainActivity", "无障碍服务未启用，请用户手动前往开启")
+            // 移除自动跳转，仅记录日志
         } else {
             Log.d("MainActivity", "无障碍服务已启用，确保服务正常运行")
             try {
