@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.clipsaver.feature.history"
+    namespace = "com.clipsaver.feature.history"
     compileSdk = 36
 
     defaultConfig {

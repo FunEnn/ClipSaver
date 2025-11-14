@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.clipsaver.data.clipboard"
+    namespace = "com.clipsaver.data.clipboard"
     compileSdk = 36
 
     defaultConfig {

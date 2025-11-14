@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.clipsaver.utils"
+    namespace = "com.clipsaver.core.utils"
     compileSdk = 36
 
     defaultConfig {

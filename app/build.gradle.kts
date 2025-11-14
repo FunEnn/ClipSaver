@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.clipsaver"
+    namespace = "com.clipsaver"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.clipsaver"
+        applicationId = "com.clipsaver"
         minSdk = 26
         targetSdk = 35
         versionCode = 1

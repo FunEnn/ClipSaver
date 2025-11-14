@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name=".ClipSaverApplication"
+        android:name="com.clipsaver.ClipSaverApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,7 +19,7 @@
         android:theme="@style/Theme.ClipSaver"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name="com.clipsaver.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,13 +29,13 @@
         </activity>
         
         <service
-            android:name=".service.ClipboardMonitorService"
+            android:name="com.clipsaver.service.ClipboardMonitorService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
 
         <service
-            android:name=".accessibility.GlobalClipboardService"
+            android:name="com.clipsaver.accessibility.GlobalClipboardService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:enabled="true"
             android:exported="false">
@@ -48,7 +48,7 @@
         </service>
         
         <receiver
-            android:name=".receiver.BootCompleteReceiver"
+            android:name="com.clipsaver.receiver.BootCompleteReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
